@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/user/auth" method="post" style="position: absolute;transform: translate(-50%, -50%);top:50%;left:50%;">
+    <form action="${pageContext.request.contextPath}/user/userManage" method="post" style="position: absolute;transform: translate(-50%, -50%);top:50%;left:50%;">
         <div class="in_form">
             <label for="username">用户名</label>
             <input type="text" id="username" name="username"/>
