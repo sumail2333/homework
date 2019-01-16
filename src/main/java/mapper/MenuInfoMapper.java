@@ -2,6 +2,8 @@ package mapper;
 
 import pojo.MenuInfo;
 
+import java.util.List;
+
 public interface MenuInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface MenuInfoMapper {
     int updateByPrimaryKeySelective(MenuInfo record);
 
     int updateByPrimaryKey(MenuInfo record);
+
+    List<MenuInfo> selectAllMenuItem();
 }

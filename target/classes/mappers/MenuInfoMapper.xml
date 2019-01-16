@@ -79,4 +79,9 @@
       input_time = #{inputTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectAllMenuItem" resultType="pojo.MenuInfo">
+    select
+    <include refid="Base_Column_List" />
+    from menu_info
+  </select>
 </mapper>

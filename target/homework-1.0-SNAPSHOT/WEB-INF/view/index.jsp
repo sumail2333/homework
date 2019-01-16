@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Title</title>
+    <script type="text/javascript" src="../resources/jquery.min.js"></script>
     <style type="text/css">
         input {
             border:none;
@@ -20,6 +22,25 @@
             margin-right: 10px;
         }
     </style>
+    <script>
+        var contextPath = "${pageContext.request.contextPath}";
+    </script>
+    <script type="text/javascript">
+        function checkMenu(){
+            // $.ajax({
+            //     type: "post",
+            //     dataType: "text",
+            //     contentType: "application/json; charset=utf-8",
+            //     url: contextPath+"/opt/list",
+            //     success: function (data) {
+            //         window.location.href="/opt/list";
+            //     },
+            //     error: function (data) {
+            //     }
+            // });
+            window.location.href = contextPath+"/opt/list";
+        }
+    </script>
 </head>
 <body>
     <form action="${pageContext.request.contextPath}/user/userManage" method="post" style="position: absolute;transform: translate(-50%, -50%);top:50%;left:50%;">
@@ -33,5 +54,7 @@
         </div>
         <div class="in_form"><input type="submit" value="登录" /></div>
     </form>
+    <%--<input type="button" value="菜单总览" onclick="checkMenu()"/>--%>
+    <a href="opt/list">菜单总览</a>
 </body>
 </html>
