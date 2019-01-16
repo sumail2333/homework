@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("role")
 public class RoleController {
     @Autowired
     public RoleInfoService roleInfoService;

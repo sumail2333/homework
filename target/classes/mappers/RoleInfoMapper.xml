@@ -55,4 +55,24 @@
     set role_name = #{roleName,jdbcType=VARCHAR}
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
+  <select id="listRole"  resultMap="BaseResultMap">
+    select DISTINCT
+    <include refid="Base_Column_List" />
+    from role_info
+    ORDER By role_name ASC
+  </select>
+  <select id="getRoleByParam" parameterType="pojo.RoleInfo" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from role_info where 1=1
+    <if test="roleInfo.roleId != null and roleInfo.roleId !=''">
+      and role_id = #{roleId}
+    </if>
+    <if test="roleInfo.roleName != null and roleInfo.roleName != ''">
+      and role_name like concat( '%',#{roleName},'%' )
+    </if>
+  </select>
 </mapper>
