@@ -3,7 +3,9 @@ package web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import pojo.RoleInfo;
+import pojo.RoleMenuBean;
 import pojo.UserRoleJoin;
 import service.RoleInfoService;
 import service.UserRoleService;
@@ -17,11 +19,21 @@ public class UserRoleController {
     @Autowired
     public UserRoleService userRoleService;
 
+    @RequestMapping(value = "routeToUserRole")
+    public ModelAndView routeToUserRole(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("roleManagement");
+        List<UserRoleJoin> roleMenuBeanList = userRoleService.listAllUserRole();
+        modelAndView.addObject("roleMenuBeanList",roleMenuBeanList);
+        return modelAndView;
+
+    }
+
     @RequestMapping(value = "listUserRole",method = RequestMethod.GET)
     @ResponseBody
     public List<UserRoleJoin> searchUserRole(@RequestParam String roleID, @RequestParam String roleName ,@RequestParam String userId,@RequestParam String userName){
         UserRoleJoin userRoleJoin = new UserRoleJoin();
-        if(roleID == null && roleName ==null && userId == null && userName ==null){
+        if(roleID == "" && roleName =="" && userId == "" && userName ==""){
             return userRoleService.listAllUserRole();
         }else {
             userRoleJoin.setRoleId(Integer.valueOf(roleID));

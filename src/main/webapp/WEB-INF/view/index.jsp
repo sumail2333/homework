@@ -56,5 +56,6 @@
     </form>
     <%--<input type="button" value="菜单总览" onclick="checkMenu()"/>--%>
     <a href="opt/list">菜单总览</a>
+    <a href="role/routeToRole">角色管理</a>
 </body>
 </html>

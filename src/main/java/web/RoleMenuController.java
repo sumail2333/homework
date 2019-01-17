@@ -3,6 +3,8 @@ package web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import pojo.RoleInfo;
 import pojo.RoleMenuBean;
 import service.RoleMenuService;
 
@@ -16,11 +18,21 @@ public class RoleMenuController {
     @Autowired
     public RoleMenuService roleMenuService;
 
+    @RequestMapping(value = "routeToRoleMenu")
+    public ModelAndView routeToRoleMenu(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("roleManagement");
+        List<RoleMenuBean> roleMenuBeanList = roleMenuService.listAllRoleMenu();
+        modelAndView.addObject("roleMenuBeanList",roleMenuBeanList);
+        return modelAndView;
+
+    }
+
     @RequestMapping(value = "listRoleMenu", method = RequestMethod.GET)
     @ResponseBody
     public List<RoleMenuBean> listRoleMenu(@RequestParam String roleId,@RequestParam String menuId,@RequestParam String roleName,@RequestParam String menuName){
         RoleMenuBean roleMenuBean = new RoleMenuBean();
-        if(roleId == null && menuId == null && roleName ==null && menuName == null){
+        if(roleId == "" && menuId == "" && roleName =="" && menuName == ""){
             return roleMenuService.listAllRoleMenu();
         }else {
             roleMenuBean.setRoleId(Integer.parseInt(roleId));

@@ -3,6 +3,7 @@ package web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import pojo.RoleInfo;
 import service.RoleInfoService;
 
@@ -15,14 +16,26 @@ public class RoleController {
     @Autowired
     public RoleInfoService roleInfoService;
 
+    @RequestMapping(value = "routeToRole")
+    public ModelAndView routeToRole(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("roleManagement");
+        List<RoleInfo> roleInfos = roleInfoService.listAllRole();
+        modelAndView.addObject("roleInfo",roleInfos);
+        return modelAndView;
+
+    }
+
     @RequestMapping(value = "listRole",method = RequestMethod.GET)
     @ResponseBody
     public List<RoleInfo> searchRoles(@RequestParam String roleID, @RequestParam String roleName ){
         RoleInfo roleInfo = new RoleInfo();
-        if(roleID == null && roleName ==null){
+        if(roleID == "" && roleName ==""){
             return roleInfoService.listAllRole();
         }else {
-            roleInfo.setRoleId(Integer.valueOf(roleID));
+            if(roleID!=""){
+                roleInfo.setRoleId(Integer.valueOf(roleID));
+            }
             roleInfo.setRoleName(roleName);
             return roleInfoService.getRoleByParam(roleInfo);
         }
