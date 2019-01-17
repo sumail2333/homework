@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.UserRoleMapper">
-  <resultMap id="BaseResultMap" type="pojo.UserRole">
+  <resultMap id="BaseResultMap" type="pojo.UserRoleJoin">
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
+  <resultMap id="ResultMap" type="pojo.UserRoleJoin">
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    role_id, user_id
+  </sql>
   <insert id="insert" parameterType="pojo.UserRole">
     insert into user_role (user_id, role_id)
     values (#{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER})
@@ -28,8 +37,49 @@
       </if>
     </trim>
   </insert>
+<<<<<<< HEAD
   <select id="selectBuUserId" resultMap="BaseResultMap">
     select user_id, role_id
           from user_role where user_id=#{userId,jdbcType=VARCHAR}
   </select>
+=======
+  <select id="listUserRole"  resultMap="ResultMap">
+    select user_info.user_id,user_info.user_name,user_role.role_id,role_info.role_name from user_info LEFT JOIN user_role on user_role.user_id = user_info.user_id
+    LEFT JOIN role_info on role_info.role_id = user_role.role_id
+    ORDER By user_role.user_id ASC
+  </select>
+  <select id="getUserRoleByParam" parameterType="pojo.UserRoleJoin" resultMap="ResultMap">
+    select
+    user_info.user_id,user_info.user_name,user_role.role_id,role_info.role_name
+    from user_info LEFT JOIN user_role on user_role.user_id = user_info.user_id
+    LEFT JOIN role_info on role_info.role_id = user_role.role_id
+    where 1=1
+    <if test="UserRoleJoin.roleId != null and UserRoleJoin.roleId !=''">
+      and user_role.role_id = #{roleId}
+    </if>
+    <if test="UserRoleJoin.roleName != null and UserRoleJoin.roleName != ''">
+      and role_info.role_name like concat( '%',#{roleName},'%' )
+    </if>
+    <if test="UserRoleJoin.userId != null and UserRoleJoin.userId !=''">
+      and user_role.user_id = #{userId}
+    </if>
+    <if test="UserRoleJoin.userName != null and UserRoleJoin.userName != ''">
+      and user_info.user_name like concat( '%',#{userName},'%' )
+    </if>
+    ORDER BY user_info.user_id asc
+  </select>
+  <update id="updateByUserId" parameterType="pojo.UserRole">
+    update user_role
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByUserIdAndRoleId" parameterType="pojo.UserRole">
+    delete from user_role
+    where user_id = #{userId,jdbcType=VARCHAR} and role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+>>>>>>> 25a5f4d254166f1c2e586aa351bfefd8903c057a
 </mapper>
