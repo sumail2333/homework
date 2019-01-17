@@ -4,7 +4,11 @@
   <resultMap id="BaseResultMap" type="pojo.UserRoleJoin">
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
+  </resultMap>
+  <resultMap id="ResultMap" type="pojo.UserRoleJoin">
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -33,12 +37,12 @@
       </if>
     </trim>
   </insert>
-  <select id="listUserRole"  resultMap="BaseResultMap">
+  <select id="listUserRole"  resultMap="ResultMap">
     select user_info.user_id,user_info.user_name,user_role.role_id,role_info.role_name from user_info LEFT JOIN user_role on user_role.user_id = user_info.user_id
     LEFT JOIN role_info on role_info.role_id = user_role.role_id
     ORDER By user_role.user_id ASC
   </select>
-  <select id="getUserRoleByParam" parameterType="pojo.UserRoleJoin" resultMap="BaseResultMap">
+  <select id="getUserRoleByParam" parameterType="pojo.UserRoleJoin" resultMap="ResultMap">
     select
     user_info.user_id,user_info.user_name,user_role.role_id,role_info.role_name
     from user_info LEFT JOIN user_role on user_role.user_id = user_info.user_id
@@ -69,6 +73,6 @@
   </update>
   <delete id="deleteByUserIdAndRoleId" parameterType="pojo.UserRole">
     delete from user_role
-    where user_id = #{user_id,jdbcType=VARCHAR} and role_id = #{role_id,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=VARCHAR} and role_id = #{roleId,jdbcType=INTEGER}
   </delete>
 </mapper>
