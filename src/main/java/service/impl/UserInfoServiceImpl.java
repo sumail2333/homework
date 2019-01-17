@@ -19,4 +19,16 @@ public class UserInfoServiceImpl implements UserInfoService {
         System.out.println("dddddddddddddddddddddd");
         return userInfoMapper.selectByUsernameAndPassword(username,password);
     }
+
+    @Override
+    public UserInfo selectByUserName(String username) {
+        return userInfoMapper.selectByUserName(username);
+    }
+
+    @Override
+    public int insertSelective(UserInfo record) {
+        return userInfoMapper.insertSelective(record);
+    }
+
+
 }

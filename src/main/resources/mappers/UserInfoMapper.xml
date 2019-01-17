@@ -85,4 +85,10 @@
     from user_info
     where user_name = #{username,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
   </select>
+  <select id="selectByUserName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_info
+    where user_name = #{username,jdbcType=VARCHAR}
+  </select>
 </mapper>
